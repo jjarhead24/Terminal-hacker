@@ -7,6 +7,12 @@ public class Hacker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ShowMainMenu("Hi noob");
+    }
+
+    void ShowMainMenu(string greeting)
+    {
+        Terminal.WriteLine(greeting);
         Terminal.WriteLine("Welcome to Terminal Hacker");
         Terminal.WriteLine("Who would you like to hack into? Press the number of your choice");
         Terminal.WriteLine("");
@@ -17,9 +23,13 @@ public class Hacker : MonoBehaviour
         Terminal.WriteLine("Enter your selection:");
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnUserInput(string input)
     {
-        
+        print("The user typed " + input);
+        print(input == "1");
+        //if input == "1";
+        //{
+
+        //}
     }
 }
