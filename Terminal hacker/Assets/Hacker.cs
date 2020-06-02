@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
+    //game config data
+    string[] level1passwords = {"password", "books", "children", "mother", "grounded", "dinner" };
+    string[] level2passwords = { "random numbers", "math is fun", "detention", "headteacher", "english", "science" };
+    string[] level3passwords = { "nebula", "dwarf star", "white dwarf", "intersteller", "the red planet", "dark matter" };
+
     //game state
     int level;
-
+    string password;
     enum Screen { MainMenu, Password, Win }
     Screen currentScreen = Screen.MainMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +47,23 @@ public class Hacker : MonoBehaviour
         {
             RunMainMenu(input);
         }
+        else if (currentScreen == Screen.Password)
+        {
+            CheckPassword(input);
+        }
 
+    }
+
+    private void CheckPassword(string input)
+    {
+        if (input == password)
+        {
+            WinGame();
+        }
+        else
+        {
+            Terminal.WriteLine("incorrect password try again");
+        }
     }
 
     private void RunMainMenu(string input)
@@ -49,16 +71,19 @@ public class Hacker : MonoBehaviour
         if (input == "1")
         {
             level = 1;
+            password = level1passwords[2]; // make random
             StartGame();
         }
         else if (input == "2")
         {
             level = 2;
+            password = level2passwords[5];
             StartGame();
         }
         else if (input == "3")
         {
             level = 3;
+            password = level3passwords[0];
             StartGame();
         }
         else if (input == "69")
@@ -77,5 +102,10 @@ public class Hacker : MonoBehaviour
         Terminal.WriteLine("you selected level " + level);
         Terminal.WriteLine("please enter your password: ");
 
+    }
+
+    void WinGame()
+    {
+        currentScreen = Screen.Win;
     }
 }
