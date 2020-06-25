@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
     //game config data
-    string[] level1passwords = {"password", "books", "children", "mother", "grounded", "dinner" };
+    string[] level1passwords = { "password", "books", "children", "mother", "grounded", "dinner" };
     string[] level2passwords = { "random numbers", "math is fun", "detention", "headteacher", "english", "science" };
     string[] level3passwords = { "nebula", "dwarf star", "white dwarf", "intersteller", "the red planet", "dark matter" };
 
@@ -20,6 +17,11 @@ public class Hacker : MonoBehaviour
     void Start()
     {
         ShowMainMenu();
+    }
+
+    private void Update()
+    {
+        
     }
 
     void ShowMainMenu()
@@ -68,22 +70,10 @@ public class Hacker : MonoBehaviour
 
     private void RunMainMenu(string input)
     {
-        if (input == "1")
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
+        if (isValidLevelNumber)
         {
-            level = 1;
-            password = level1passwords[2]; // make random
-            StartGame();
-        }
-        else if (input == "2")
-        {
-            level = 2;
-            password = level2passwords[5];
-            StartGame();
-        }
-        else if (input == "3")
-        {
-            level = 3;
-            password = level3passwords[0];
+            level = int.Parse(input);
             StartGame();
         }
         else if (input == "69")
@@ -99,13 +89,65 @@ public class Hacker : MonoBehaviour
     void StartGame()
     {
         currentScreen = Screen.Password;
-        Terminal.WriteLine("you selected level " + level);
+        Terminal.ClearScreen();
         Terminal.WriteLine("please enter your password: ");
-
+        switch (level) //like an if
+        {
+            case 1:
+                password = level1passwords[Random.Range(0, (level1passwords.Length))];
+                break;
+            case 2:
+                password = level2passwords[Random.Range(0, (level2passwords.Length))];
+                break;
+            case 3:
+                password = level3passwords[Random.Range(0, (level3passwords.Length))];
+                break;
+            default:
+                Debug.LogError("invalid level");
+                break;
+        }
     }
 
     void WinGame()
     {
         currentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowLevelReward();
+    }
+
+    void ShowLevelReward()
+    {
+        switch (level)
+        {
+            case 1:
+                Terminal.WriteLine("You've won a cookie");
+                Terminal.WriteLine(@"
+                 _    _      
+                | |  (_)     
+  ___ ___   ___ | | ___  ___ 
+ / __/ _ \ / _ \| |/ / |/ _ \
+| (_| (_) | (_) |   <| |  __/
+ \___\___/ \___/|_|\_\_|\___|
+");
+                break;
+            case 2:
+                Terminal.WriteLine("You've won a pen");
+                break;
+            case 3:
+                Terminal.WriteLine("You've won a planet");
+                Terminal.WriteLine(@"
+                  .:'  .:
+        ,MMM8&&&.:'   .:'
+       MMMMM88&&&&  .:'
+      MMMMM88&&&&&&:'
+      MMMMM88&&&&&&
+    .:MMMMM88&&&&&&
+  .:'  MMMMM88&&&&
+.:'   .:'MMM8&&&'
+");
+                break;
+        }
     }
 }
+   
+
