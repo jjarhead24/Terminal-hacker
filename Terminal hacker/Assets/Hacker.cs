@@ -12,6 +12,7 @@ public class Hacker : MonoBehaviour
     string password;
     enum Screen { MainMenu, Password, Win }
     Screen currentScreen = Screen.MainMenu;
+    const string Return2Menu = "You can type menu at any time";
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,7 @@ public class Hacker : MonoBehaviour
         Terminal.WriteLine("2: Your school");
         Terminal.WriteLine("3: NASA");
         Terminal.WriteLine("");
+        Terminal.WriteLine(Return2Menu);
         Terminal.WriteLine("Enter your selection:");
     }
 
@@ -64,7 +66,7 @@ public class Hacker : MonoBehaviour
         }
         else
         {
-            Terminal.WriteLine("incorrect password try again");
+            AskForPassword();
         }
     }
 
@@ -74,7 +76,7 @@ public class Hacker : MonoBehaviour
         if (isValidLevelNumber)
         {
             level = int.Parse(input);
-            StartGame();
+            AskForPassword();
         }
         else if (input == "69")
         {
@@ -86,11 +88,16 @@ public class Hacker : MonoBehaviour
         }
     }
 
-    void StartGame()
+    void AskForPassword()
     {
         currentScreen = Screen.Password;
         Terminal.ClearScreen();
-        Terminal.WriteLine("please enter your password: ");
+        SetRandomPassword();
+        Terminal.WriteLine("Enter your password, hint " + password.Anagram());
+    }
+
+    void SetRandomPassword()
+    {
         switch (level) //like an if
         {
             case 1:
@@ -147,6 +154,7 @@ public class Hacker : MonoBehaviour
 ");
                 break;
         }
+        Terminal.WriteLine(Return2Menu);
     }
 }
    
