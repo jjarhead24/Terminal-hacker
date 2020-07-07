@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Hacker : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Hacker : MonoBehaviour
     string password;
     enum Screen { MainMenu, Password, Win }
     Screen currentScreen = Screen.MainMenu;
-    const string Return2Menu = "You can type menu at any time";
+    const string Return2Menu = "You can type menu or quit at any time";
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +47,10 @@ public class Hacker : MonoBehaviour
         if (input == "menu")
         {
             ShowMainMenu();
+        }
+        else if (input == "quit")
+        {
+            Application.Quit();
         }
         else if (currentScreen == Screen.MainMenu)
         {
